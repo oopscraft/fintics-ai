@@ -1,2 +1,2 @@
-# fintics-ml
+# fintics-ai
 Fintics Machine Learning
