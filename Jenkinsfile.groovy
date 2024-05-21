@@ -3,7 +3,6 @@ pipeline {
     parameters {
         string(name: 'IMAGE_NAMESPACE', defaultValue: params.IMAGE_NAMESPACE, description: 'image namespace')
         string(name: 'IMAGE_TAGS', defaultValue: params.IMAGE_TAGS, description: 'image tags')
-        string(name:'IMAGE_REPO_URL', defaultValue: params.PUBLISHING_MAVEN_URL, description:'publishing maven url')
         credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl',
                 name: 'IMAGE_REPO_CREDENTIALS',
                 defaultValue: params.IMAGE_REPO_CREDENTIALS,
