@@ -47,7 +47,7 @@ pipeline {
                 '''.stripIndent()
                 sh '''
                     kubectl \
-                    rollout status deployment/fintics-ai
+                    rollout status deployment/fintics-ai --timeout=10m
                 '''.stripIndent()
             }
         }
