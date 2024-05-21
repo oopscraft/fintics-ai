@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                 docker login ${IMAGE_REPO_URL}
-                docker docker push ${IMAGE_NAMESPACE}/fintics-ai:${IMAGE_TAGS}
+                docker push ${IMAGE_NAMESPACE}/fintics-ai:${IMAGE_TAGS}
                 '''.stripIndent()
             }
         }
