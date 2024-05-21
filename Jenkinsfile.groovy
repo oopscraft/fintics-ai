@@ -1,16 +1,13 @@
 pipeline {
     agent any
     parameters {
+        string(name: 'IMAGE_NAMESPACE', defaultValue: params.IMAGE_NAMESPACE, description: 'image namespace')
+        string(name: 'IMAGE_TAGS', defaultValue: params.IMAGE_TAGS, description: 'image tags')
+        string(name:'IMAGE_REPO_URL', defaultValue: params.PUBLISHING_MAVEN_URL, description:'publishing maven url')
         credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl',
-                name: 'JIB_FROM_AUTH_CREDENTIALS',
-                defaultValue: params.JIB_FROM_AUTH_CREDENTIALS,
-                description: 'base image repository credentials')
-        string(name: 'JIB_TO_IMAGE_NAMESPACE', defaultValue: params.JIB_TO_IMAGE_NAMESPACE, description: 'target image')
-        string(name: 'JIB_TO_TAGS', defaultValue: params.JIB_TO_TAGS, description: 'target image tags')
-        credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl',
-                name: 'JIB_TO_AUTH_CREDENTIALS',
-                defaultValue: params.JIB_TO_AUTH_CREDENTIALS,
-                description: 'target image repository credentials')
+                name: 'IMAGE_REPO_CREDENTIALS',
+                defaultValue: params.IMAGE_REPO_CREDENTIALS,
+                description: 'image repository credentials')
         string(name: 'SEND_MESSAGE_TO', defaultValue: params.SEND_MESSAGE_TO ?: '___', description: 'Message platform(SLACK|...)')
     }
     options {
@@ -24,22 +21,20 @@ pipeline {
             }
         }
         stage("build") {
-            environment {
-                MAVEN_CREDENTIALS = credentials('MAVEN_CREDENTIALS')
-            }
             steps {
                 sh '''
-                docker build -t fintics-ai .
+                docker build -t ${IMAGE_NAMESPACE}/fintics-ai:${IMAGE_TAGS} .
                 '''.stripIndent()
             }
         }
         stage("publish") {
             environment {
-                JIB_FROM_AUTH_CREDENTIALS = credentials('JIB_FROM_AUTH_CREDENTIALS')
-                JIB_TO_AUTH_CREDENTIALS = credentials('JIB_TO_AUTH_CREDENTIALS')
+                IMAGE_REPO_CREDENTIALS = credentials('IMAGE_REPO_CREDENTIALS')
             }
             steps {
                 sh '''
+                docker login 
+                docker docker push ${IMAGE_NAMESPACE}/fintics-ai:${IMAGE_TAGS}
                 '''.stripIndent()
             }
         }
