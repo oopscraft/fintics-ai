@@ -7,14 +7,16 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage, AIMessage
 
 # ollama
-chatOllama = ChatOllama(model = "llama3")
+chatOllama = ChatOllama(model = "phi3")
 prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content="""
                       You are a helpful assistant. 
                       Please perform sentiment analysis on the given news article.
-                      0. Response is JSON format with 'sentiment','confidence','reason'.
-                      1. Ensure the response is only the JSON string with no additional text.
-                      2. The reason value is translated into the language of the article.
+                      - Response is JSON format with 'sentiment','confidence','reason'.
+                      - Ensure the response is only the JSON string with no additional text.
+                      - 'sentiment' is one of POSITIVE, NUETRAL, NEGATIVE.
+                      - 'confidence' is 0~100 numeric value.
+                      - 'reason' value is translated into the language of the article.
                       """),
         MessagesPlaceholder(variable_name = "message")
     ])
