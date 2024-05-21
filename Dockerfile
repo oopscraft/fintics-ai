@@ -20,7 +20,7 @@ COPY ./finticsai/ ./finticsai
 RUN echo '#!/bin/bash\n\
 ollama serve &\n\
 sleep 3\n\
-ollama run phi3\n\
+ollama run gemma:2b\n\
 python3 ./finticsai/app.py\n' > /app/start.sh
 
 # chmod

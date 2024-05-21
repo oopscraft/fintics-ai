@@ -7,7 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage, AIMessage
 
 # ollama
-chatOllama = ChatOllama(model = "phi3")
+chatOllama = ChatOllama(model = "gemma:2b")
 prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content="""
                       You are a helpful assistant. 
