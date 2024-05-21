@@ -5,7 +5,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'src')))
 
 
-from finticsml.fintics_ml import app
+from finticsai.fintics_ai import app
 
 class FinticsMlTestCase(unittest.TestCase):
     def setUp(self):

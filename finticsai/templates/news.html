@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+    <h1>News</h1>
+    <div id="chat-box"></div>
+    <form onsubmit="return false;">
+        <textarea id="message" placeholder="Type your message here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </form>
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById('message').value;
+            const response = await fetch('/news', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message})
+            });
+            const responseBody = await response.json();
+            console.log(responseBody);
+            document.getElementById('chat-box').innerText += `\nYou: ${message}\nLlama: ${responseBody.message}\n`;
+        }
+    </script>
+</body>
+</html>
