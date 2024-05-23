@@ -10,25 +10,12 @@ ENV PYTHONPATH=/app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# install ollama
-RUN curl -fsSL https://ollama.com/install.sh | sh
-
 # source
 COPY ./finticsai/ ./finticsai
-
-# start.sh
-RUN echo '#!/bin/bash\n\
-ollama serve &\n\
-sleep 3\n\
-ollama run gemma:2b\n\
-python3 ./finticsai/app.py\n' > /app/start.sh
-
-# chmod
-RUN chmod +x /app/start.sh
 
 # expose 
 EXPOSE 8080
 
 # command 
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT ["python", "finticsai/app.py"]
 

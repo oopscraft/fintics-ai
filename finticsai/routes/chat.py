@@ -5,9 +5,9 @@ from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage, AIMessage
+from finticsai.modules.ollama import chatOllama
 
 # ollama
-chatOllama = ChatOllama(model = "gemma:2b")
 prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content="You are a helpful assistant."),
         MessagesPlaceholder(variable_name = "message")
