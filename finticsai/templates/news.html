@@ -23,7 +23,7 @@
             });
             const responseBody = await response.json();
             console.log(responseBody);
-            document.getElementById('chat-box').innerText += `\nYou: ${message}\nLlama: ${responseBody.message}\n`;
+            document.getElementById('chat-box').innerText += `\nYou:\n${message}\nAI:\n${JSON.stringify(responseBody)}\n`;
         }
     </script>
 </body>

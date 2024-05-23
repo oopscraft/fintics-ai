@@ -42,9 +42,7 @@ def post_chat():
     logging.info(f"ai_message: {ai_message}")
 
     # response
-    response_message = ai_message.content;
-    logging.info(f"response_message:{response_message}")
-    response_data = {"message": response_message}
+    response_data = json.loads(ai_message.content)
     response_json = json.dumps(response_data, ensure_ascii=False)
     return make_response(response_json, 200, {'Content-Type': 'application/json'})
 
