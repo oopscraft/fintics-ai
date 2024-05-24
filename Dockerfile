@@ -16,6 +16,5 @@ COPY ./finticsai/ ./finticsai
 # expose 
 EXPOSE 8080
 
-# command 
-ENTRYPOINT ["python", "finticsai/app.py"]
-
+# command
+ENTRYPOINT ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "finticsai.app:app"]
