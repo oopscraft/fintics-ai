@@ -12,11 +12,15 @@ prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content="""
                       You are a helpful assistant. 
                       Please perform sentiment analysis on the given news article.
-                      - Response is JSON format with 'sentiment','confidence','reason'.
-                      - Ensure the response is only the JSON string with no additional text.
-                      - 'sentiment' is one of POSITIVE, NUETRAL, NEGATIVE.
+                      [input]
+                      - 1st line is news URL
+                      - 2nd line is news title
+                      [output]
+                      Response is JSON format with 'sentiment','confidence','reason'.
+                      Ensure the response is only the JSON string with no additional text.
+                      - 'sentiment' is one of POSITIVE, NEUTRAL, NEGATIVE.
                       - 'confidence' is 0~100 numeric value.
-                      - 'reason' value is translated into the language of the article.
+                      - 'reason' value must be translated into the language of input title.
                       """),
         MessagesPlaceholder(variable_name = "message")
     ])
@@ -33,16 +37,19 @@ def get_news():
 # POST /news
 @news.route('/news', methods = ['POST'])
 def post_chat():
-    request_message = request.json.get('message')
-    logging.info(f"request_message:{request_message}") 
+    logging.info(f"request.json: {request.json}")
 
-    # interact
-    human_message = HumanMessage(content=request_message)
+    # call
+    content = f"""
+        url: {request.json.get('url')}
+        title: {request.json.get('title')}
+        """
+    human_message = HumanMessage(content=content)
     ai_message = chain.invoke({"message": [human_message]})
-    logging.info(f"ai_message: {ai_message}")
+    logging.info(f"ai_message.content: {ai_message.content}")
 
     # response
-    response_data = json.loads(ai_message.content)
-    response_json = json.dumps(response_data, ensure_ascii=False)
-    return make_response(response_json, 200, {'Content-Type': 'application/json'})
+    response_json = json.loads(ai_message.content)
+    logging.info(f"response_json: {response_json}")
+    return make_response(json.dumps(response_json, ensure_ascii=False), 200, {'Content-Type': 'application/json'})
 

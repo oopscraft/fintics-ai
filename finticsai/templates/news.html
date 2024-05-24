@@ -8,22 +8,33 @@
     <h1>News</h1>
     <div id="chat-box"></div>
     <form onsubmit="return false;">
-        <textarea id="message" placeholder="Type your message here..."></textarea>
+        <label>
+            <span>URL</span>
+            <input id="url" type="text" placeholder="news url"/>
+        </label>
+        <label>
+            <span>Tile</span>
+            <input id="title" type="text" placeholder="news title"/>
+        </label>
         <button onclick="sendMessage()">Send</button>
     </form>
     <script>
         async function sendMessage() {
-            const message = document.getElementById('message').value;
+            const url = document.getElementById('url').value;
+            const title = document.getElementById('title').value;
             const response = await fetch('/news', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ message: message})
+                body: JSON.stringify({
+                    url: url,
+                    title: title
+                })
             });
             const responseBody = await response.json();
             console.log(responseBody);
-            document.getElementById('chat-box').innerText += `\nYou:\n${message}\nAI:\n${JSON.stringify(responseBody)}\n`;
+            document.getElementById('chat-box').innerText += '\n' + JSON.stringify(responseBody);
         }
     </script>
 </body>
