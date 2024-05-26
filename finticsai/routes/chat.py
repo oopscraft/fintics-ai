@@ -10,7 +10,7 @@ from finticsai.modules.ollama import chatOllama
 # ollama
 prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content="You are a helpful assistant."),
-        MessagesPlaceholder(variable_name = "message")
+        MessagesPlaceholder(variable_name="message")
     ])
 chain = prompt | chatOllama
 
