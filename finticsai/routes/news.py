@@ -18,6 +18,7 @@ prompt = ChatPromptTemplate.from_messages([
                       Please perform sentiment analysis on the given news article.
                       [output]
                       Response is JSON format with 'sentiment','confidence','reason'.
+                      ex) {"sentiment":"", "confidence":"", "reason":""}
                       Ensure the response is only the JSON string with no additional text.
                       - 'sentiment' is one of POSITIVE, NEUTRAL, NEGATIVE.
                       - 'confidence' is 0~100 numeric value.
