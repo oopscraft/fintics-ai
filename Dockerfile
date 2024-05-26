@@ -19,4 +19,4 @@ COPY ./finticsai/ ./finticsai
 EXPOSE 8080
 
 # command
-ENTRYPOINT ["gunicorn", "-w", "2", "-b", "0.0.0.0:8080", "finticsai.app:app"]
+ENTRYPOINT ["gunicorn", "-w", "5", "-b", "0.0.0.0:8080", "finticsai.app:app"]
